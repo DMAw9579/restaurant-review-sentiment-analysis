@@ -239,7 +239,7 @@ Deepika Awachar
 
 B.Tech – Computer Science and Engineering
 
-GitHub: https://github.com/YOUR-DMAw9579
+GitHub: https://github.com/DMAw9579
 
 LinkedIn: https://linkedin.com/in/deepikaawachar718
 
