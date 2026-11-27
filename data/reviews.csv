@@ -1,1 +1,44 @@
+restaurant_name,city,review_date,review_rating,review_text,review_sentiment
+Spice Villa,Mumbai,2024-07-05,5,"Excellent food and service!",Positive
+Spice Villa,Pune,2024-08-12,4,"Loved the ambiance and the dishes.",Positive
+Spice Villa,Delhi,2024-09-20,2,"Food was cold and bland.",Negative
+Spice Villa,Mumbai,2024-10-01,3,"Service was average, nothing special.",Neutral
+Spice Villa,Delhi,2024-11-10,1,"Very disappointed with the food.",Negative
+Spice Villa,Pune,2024-12-25,5,"Amazing experience, will visit again.",Positive
+Spice Villa,Mumbai,2025-01-15,4,"Great service and delicious meals.",Positive
+Spice Villa,Delhi,2025-02-02,2,"Too pricey for the quality.",Negative
+Spice Villa,Pune,2025-03-09,5,"Highly recommended restaurant.",Positive
+Spice Villa,Delhi,2025-04-11,3,"Food was okay, but service was slow.",Neutral
+Urban Tandoor,Mumbai,2024-07-14,4,"Very tasty and fresh food.",Positive
+Urban Tandoor,Pune,2024-08-22,3,"Ambiance was nice but food was late.",Neutral
+Urban Tandoor,Delhi,2024-09-18,1,"Poor service and cold food.",Negative
+Urban Tandoor,Pune,2024-10-30,2,"Not a good experience.",Negative
+Urban Tandoor,Delhi,2024-11-19,4,"The best place in town for dinner.",Positive
+Urban Tandoor,Mumbai,2024-12-02,5,"Staff were friendly and food was superb.",Positive
+Urban Tandoor,Pune,2025-01-25,3,"Average experience overall.",Neutral
+Urban Tandoor,Mumbai,2025-02-14,4,"Fantastic flavors and fast service.",Positive
+Urban Tandoor,Delhi,2025-03-20,2,"Ambiance was dull and food was soggy.",Negative
+Urban Tandoor,Pune,2025-04-01,5,"Top-notch experience, food was great!",Positive
+Burger Blast,Delhi,2024-07-07,5,"Best burgers in the city!",Positive
+Burger Blast,Mumbai,2024-08-15,4,"Quick service and tasty food.",Positive
+Burger Blast,Pune,2024-09-25,2,"Burger was dry and fries were cold.",Negative
+Burger Blast,Delhi,2024-10-05,3,"Nothing extraordinary.",Neutral
+Burger Blast,Mumbai,2024-11-21,1,"Tables were dirty, not worth it.",Negative
+Burger Blast,Pune,2024-12-30,5,"Loved the spicy chicken burger!",Positive
+Burger Blast,Mumbai,2025-01-10,4,"Good value for money.",Positive
+Burger Blast,Delhi,2025-02-18,2,"Service was very slow.",Negative
+Burger Blast,Pune,2025-03-05,3,"Decent place for a quick bite.",Neutral
+Burger Blast,Delhi,2025-04-16,4,"Great options and fresh ingredients.",Positive
+Spice Villa,Mumbai,2024-08-08,1,"Overcooked food and noisy place.",Negative
+Urban Tandoor,Pune,2024-09-12,4,"Lovely service and amazing meals.",Positive
+Burger Blast,Delhi,2024-10-18,2,"Too salty and poorly presented.",Negative
+Spice Villa,Pune,2024-11-03,3,"Okay food, could improve service.",Neutral
+Urban Tandoor,Mumbai,2024-12-28,5,"One of the best meals I've had!",Positive
+Burger Blast,Mumbai,2025-01-22,1,"Disappointed by the cleanliness.",Negative
+Spice Villa,Delhi,2025-02-27,4,"Tasty dishes and polite staff.",Positive
+Urban Tandoor,Delhi,2025-03-18,3,"Reasonable food and prices.",Neutral
+Burger Blast,Pune,2025-04-07,4,"Friendly staff and good burgers.",Positive
+Spice Villa,Mumbai,2025-05-12,2,"Didn't like the pasta.",Negative
 
+Royal Curry House,Jaipur,2025-06-12,3,"Overall, a satisfactory experience.",Neutral
+Spice Villa,Mumbai,2025-06-17,2,Disappointed with the service and the food was cold.,Negative
