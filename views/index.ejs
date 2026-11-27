@@ -1,1 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TasteTales | Restaurant Review System</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --primary:#27ae60;
+      --primary-dark:#1f8a4d;
+      --dark:#111827;
+      --white:#ffffff;
+      --glass:rgba(255,255,255,0.12);
+      --border:rgba(255,255,255,0.18);
+    }
+
+    body{
+      font-family:'Poppins', sans-serif;
+      background:#0f172a;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      padding:18px 7%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:1000;
+
+      background:rgba(0,0,0,0.18);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:700;
+      color:white;
+      text-decoration:none;
+    }
+
+    .logo span{
+      color:var(--primary);
+    }
+
+    .admin-btn{
+      text-decoration:none;
+      color:white;
+      background:linear-gradient(135deg,#27ae60,#2ecc71);
+      padding:12px 22px;
+      border-radius:14px;
+      font-weight:600;
+      transition:0.3s;
+      box-shadow:0 5px 15px rgba(39,174,96,0.3);
+    }
+
+    .admin-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 22px rgba(39,174,96,0.4);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero{
+      min-height:100vh;
+
+      background:
+      linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.72)),
+      url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=80');
+
+      background-size:cover;
+      background-position:center;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:100px 20px 60px;
+    }
+
+    .hero-content{
+      max-width:850px;
+      animation:fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .hero h1{
+      font-size:65px;
+      font-weight:700;
+      line-height:1.2;
+      margin-bottom:20px;
+    }
+
+    .hero h1 span{
+      color:var(--primary);
+    }
+
+    .hero p{
+      font-size:20px;
+      color:#d1d5db;
+      line-height:1.8;
+      margin-bottom:35px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .hero-btn{
+      text-decoration:none;
+      padding:14px 28px;
+      border-radius:15px;
+      font-weight:600;
+      transition:0.3s;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,#27ae60,#2ecc71);
+      color:white;
+      box-shadow:0 8px 18px rgba(39,174,96,0.35);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+    }
+
+    .btn-secondary{
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.08);
+      color:white;
+      backdrop-filter:blur(10px);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,0.15);
+    }
+
+    /* ================= FEATURES ================= */
+
+    .main-container{
+      max-width:1300px;
+      margin:auto;
+      padding:90px 20px;
+    }
+
+    .section-title{
+      text-align:center;
+      font-size:42px;
+      margin-bottom:15px;
+      font-weight:700;
+    }
+
+    .section-subtitle{
+      text-align:center;
+      color:#cbd5e1;
+      margin-bottom:55px;
+      font-size:17px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:28px;
+      margin-bottom:90px;
+    }
+
+    .card{
+      background:var(--glass);
+      border:1px solid var(--border);
+      backdrop-filter:blur(12px);
+      padding:35px 30px;
+      border-radius:24px;
+      text-align:center;
+      text-decoration:none;
+      color:white;
+      transition:0.35s ease;
+      box-shadow:0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+      background:rgba(255,255,255,0.16);
+    }
+
+    .card-icon{
+      font-size:55px;
+      margin-bottom:20px;
+    }
+
+    .card h3{
+      font-size:24px;
+      margin-bottom:15px;
+    }
+
+    .card p{
+      color:#d1d5db;
+      line-height:1.7;
+      font-size:15px;
+    }
+
+    /* ================= REVIEWS ================= */
+
+    .reviews{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:25px;
+    }
+
+    .review-card{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:30px;
+      border-radius:22px;
+      backdrop-filter:blur(12px);
+      transition:0.3s;
+    }
+
+    .review-card:hover{
+      transform:translateY(-5px);
+      background:rgba(255,255,255,0.12);
+    }
+
+    .stars{
+      color:#f1c40f;
+      font-size:18px;
+      margin-bottom:15px;
+    }
+
+    .review-text{
+      color:#e5e7eb;
+      line-height:1.8;
+      margin-bottom:18px;
+      font-size:15px;
+    }
+
+    .review-user{
+      font-weight:600;
+      color:white;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer{
+      text-align:center;
+      padding:30px 20px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      color:#cbd5e1;
+      font-size:14px;
+      background:#0b1120;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:768px){
+
+      .hero h1{
+        font-size:42px;
+      }
+
+      .hero p{
+        font-size:17px;
+      }
+
+      .section-title{
+        font-size:32px;
+      }
+
+      .navbar{
+        padding:18px 5%;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+
+    <a href="#" class="logo">
+      Taste<span>Tales</span>
+    </a>
+
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+
+      <% if (typeof user !== 'undefined' && user) { %>
+
+        <a href="/dashboard" class="admin-btn">
+          👋 Hi, <%= user.name.split(' ')[0] %>
+        </a>
+
+        <a href="/logout" class="admin-btn" style="background:linear-gradient(135deg,#e74c3c,#ff6b6b); box-shadow:0 5px 15px rgba(231,76,60,0.3);">
+          🚪 Logout
+        </a>
+
+      <% } else { %>
+
+        <a href="/login" class="admin-btn">
+          🔑 Login
+        </a>
+
+        <a href="/register" class="admin-btn" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); box-shadow:none;">
+          📝 Register
+        </a>
+
+      <% } %>
+
+      <a href="/admin/login" class="admin-btn" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.25); box-shadow:none;">
+        🔐 Admin
+      </a>
+
+    </div>
+
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h1>
+        Discover Amazing
+        <span>Food Experiences</span>
+      </h1>
+
+      <p>
+        Explore restaurants, share reviews, analyze customer sentiments,
+        and discover the most loved dishes around your city.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#features" class="hero-btn btn-primary">
+          🚀 Explore Features
+        </a>
+
+        
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+  <section class="main-container" id="features">
+
+    <h2 class="section-title">
+      Powerful Review Analytics
+    </h2>
+
+    <p class="section-subtitle">
+      Get insights from restaurant ratings, reviews, and customer feedback.
+    </p>
+
+    <div class="cards">
+
+      <a href="/charts" class="card">
+
+        <div class="card-icon">📊</div>
+
+        <h3>Average Ratings</h3>
+
+        <p>
+          Analyze average ratings and review counts for each restaurant with
+          beautiful interactive charts.
+        </p>
+
+      </a>
+
+      <a href="/sentiment-charts" class="card">
+
+        <div class="card-icon">😊</div>
+
+        <h3>Sentiment Analysis</h3>
+
+        <p>
+          Understand customer emotions using AI-powered sentiment analysis
+          dashboards and insights.
+        </p>
+
+      </a>
+
+      <a href="/views-rating" class="card">
+
+        <div class="card-icon">📅</div>
+
+        <h3>Ratings Over Time</h3>
+
+        <p>
+          Track restaurant performance trends and customer satisfaction over time.
+        </p>
+
+      </a>
+
+      <a href="/recommendations" class="card">
+
+        <div class="card-icon">🤖</div>
+
+        <h3>AI Recommendations</h3>
+
+        <p>
+          Get AI-powered restaurant picks based on real reviews, sentiment scores,
+          and your own preferences.
+        </p>
+
+      </a>
+
+    </div>
+
+    <!-- REVIEWS -->
+    <h2 class="section-title">
+      What Food Lovers Say ❤️
+    </h2>
+
+    <p class="section-subtitle">
+      Real reviews from real foodies.
+    </p>
+
+    <div class="reviews">
+
+      <div class="review-card">
+
+        <div class="stars">★★★★★</div>
+
+        <div class="review-text">
+          “The best biryani I’ve ever had! Cozy atmosphere and super friendly staff.”
+        </div>
+
+        <div class="review-user">
+          — Priya Sharma
+        </div>
+
+      </div>
+
+      <div class="review-card">
+
+        <div class="stars">★★★★☆</div>
+
+        <div class="review-text">
+          “Delicious pasta with creamy sauce. A bit pricey but definitely worth it!”
+        </div>
+
+        <div class="review-user">
+          — Rahul Patil
+        </div>
+
+      </div>
+
+      <div class="review-card">
+
+        <div class="stars">★★★★★</div>
+
+        <div class="review-text">
+          “Amazing ambiance, quick service and tasty desserts. Highly recommended!”
+        </div>
+
+        <div class="review-user">
+          — Sneha Kulkarni
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    © 2025 TasteTales Restaurant Review System |
+    Made with ❤️ by Deepika
+
+  </footer>
+
+  <%- include('partials/chatbot') %>
+
+</body>
+</html>

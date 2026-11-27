@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Review Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .chart-box {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Restaurant Review Summary</h1>
+
+  <div class="chart-container">
+    <div class="chart-box">
+      <h3>Average Ratings (All Restaurants)</h3>
+      <canvas id="avgBarChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Review Counts (All Restaurants)</h3>
+      <canvas id="reviewPieChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const chartData = <%- JSON.stringify(chartData) %>;
+
+    // Average Rating Bar Chart
+    new Chart(document.getElementById('avgBarChart'), {
+      type: 'bar',
+      data: {
+        labels: chartData.map(item => item.name),
+        datasets: [{
+          label: 'Average Rating',
+          data: chartData.map(item => parseFloat(item.avgRating)),
+          backgroundColor: 'rgba(54, 162, 235, 0.7)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true, max: 5 } }
+      }
+    });
+
+    // Review Count Pie Chart
+    new Chart(document.getElementById('reviewPieChart'), {
+      type: 'pie',
+      data: {
+        labels: chartData.map(item => item.name),
+        datasets: [{
+          label: 'Review Count',
+          data: chartData.map(item => item.reviewCount),
+          backgroundColor: [
+            'red', 'blue', 'green', 'orange', 'purple', 'cyan', 'yellow', 'pink'
+          ]
+        }]
+      }
+    });
+  </script>
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+      ← Back to Home
+    </a>
+  </div>
+  
+  
+</body>
+</html>

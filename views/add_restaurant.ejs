@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Restaurant</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f7f7f7;
+      padding: 40px;
+      text-align: center;
+    }
+    form {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: #27ae60;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1e8449;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #2c3e50;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>➕ Add New Restaurant</h1>
+
+  <form method="POST" action="/restaurant/add">
+    <input type="text" name="restaurant_name" placeholder="Restaurant Name" required />
+    <input type="text" name="city" placeholder="City" required />
+    <input type="text" name="address" placeholder="Address" required />
+    <input type="text" name="cuisine" placeholder="Cuisine (e.g. Italian, North Indian)" />
+    <button type="submit">Add Restaurant</button>
+  </form>
+
+  <a href="/admin">← Back to Dashboard</a>
+</body>
+</html>

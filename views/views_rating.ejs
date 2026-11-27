@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ratings Over Time</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+    #chart {
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>📈 Which Restaurant Has Better Ratings Over Time?</h2>
+  <div id="chart"></div>
+
+  <script>
+    const data = <%- JSON.stringify(chartData) %>;
+
+    const traces = data.map(restaurant => ({
+      x: restaurant.dates,
+      y: restaurant.ratings,
+      mode: 'lines+markers',
+      name: restaurant.name
+    }));
+
+    const layout = {
+      title: 'Restaurant Ratings Over Time',
+      xaxis: {
+        title: 'Date of Review',
+        type: 'date'
+      },
+      yaxis: {
+        title: 'Average Rating (1 to 5)',
+        range: [0, 5]
+      },
+      legend: { title: { text: 'Restaurant' } }
+    };
+
+    Plotly.newPlot('chart', traces, layout);
+  </script>
+    <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+        ← Back to Home
+    </a>
+      
+</body>
+</html>

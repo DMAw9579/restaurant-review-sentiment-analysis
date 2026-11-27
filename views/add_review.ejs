@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Restaurant Review</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    #suggestion-box {
+      background: #f0f0f0;
+      border-left: 4px solid #28a745;
+      padding: 15px;
+      margin-bottom: 10px;
+      color: #555;
+      font-style: normal;
+    }
+
+    #suggestion-box ul {
+      list-style: disc inside;
+      padding-left: 15px;
+      margin: 0;
+    }
+
+    #suggestion-box li {
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: background-color 0.2s;
+      border-radius: 4px;
+      padding: 6px;
+    }
+
+    #suggestion-box li:hover {
+      background-color: #d4edda;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add a Restaurant Review</h1>
+    <form action="/add-review" method="POST">
+      <label for="restaurant_name">Restaurant Name:</label>
+      <select id="restaurant_name" name="restaurant_name" required>
+        <option value="">Select Restaurant</option>
+        <% restaurants.forEach(function(r) { %>
+          <option value="<%= r.restaurant_name %>" data-city="<%= r.city %>">
+            <%= r.restaurant_name %>
+          </option>
+        <% }); %>
+      </select>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required readonly />
+
+      <label for="review_date">Date:</label>
+      <input type="date" id="review_date" name="review_date" required />
+
+      <label for="review_rating">Rating:</label>
+      <select id="review_rating" name="review_rating" required>
+        <option value="">Select Rating</option>
+        <option value="1">1 - Very Bad</option>
+        <option value="2">2 - Bad</option>
+        <option value="3">3 - Average</option>
+        <option value="4">4 - Good</option>
+        <option value="5">5 - Excellent</option>
+      </select>
+
+      <div id="suggestion-box" style="display:none;">
+        <strong>Suggested Reviews (click to fill):</strong>
+        <ul id="suggestion-list"></ul>
+      </div>
+
+      <label for="review_text">Review:</label>
+      <textarea
+        id="review_text"
+        name="review_text"
+        rows="4"
+        placeholder="Write your review here or click a suggestion above"
+        required
+      ></textarea>
+
+      <button type="submit">Submit Review</button>
+    </form>
+    <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    const restaurantSelect = document.getElementById("restaurant_name");
+    const cityInput = document.getElementById("city");
+    const reviewDateInput = document.getElementById("review_date");
+    const ratingSelect = document.getElementById("review_rating");
+    const suggestionBox = document.getElementById("suggestion-box");
+    const suggestionList = document.getElementById("suggestion-list");
+    const reviewTextarea = document.getElementById("review_text");
+
+    // Suggested reviews for each rating
+    const suggestions = {
+  1: [
+    "Terrible experience. The food was cold and tasteless.",
+    "Service was extremely slow and staff was rude.",
+    "Will not come back. Very disappointed.",
+    "Food quality was poor and the place was dirty.",
+    "Worst dining experience I've had in a long time."
+  ],
+  2: [
+    "Not great, some items were soggy and overpriced.",
+    "Disappointed with the service and the food was cold.",
+    "The meal was underwhelming and the ambiance was bad.",
+    "Very slow service and terrible food quality.",
+    "Rude staff and a bad dining experience overall."
+  ],
+  3: [
+    "An average place, food was acceptable.",
+    "Good enough for a quick meal.",
+    "Nothing outstanding, but not bad either.",
+    "The ambiance was nice and the food decent.",
+    "Overall, a satisfactory experience."
+  ],
+  4: [
+    "Good food and friendly service.",
+    "Enjoyed my meal, will visit again.",
+    "Nice atmosphere and tasty dishes.",
+    "Quite satisfied with the quality and service.",
+    "A reliable place for a pleasant meal."
+  ],
+  5: [
+    "Absolutely fantastic! Highly recommend.",
+    "Best dining experience I've had recently.",
+    "Delicious food and excellent service.",
+    "Loved everything about this place!",
+    "Will definitely be coming back soon."
+  ]
+};
+
+
+    // Auto-fill today's date in YYYY-MM-DD format
+    function setTodayDate() {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0
+      let dd = today.getDate();
+
+      if (mm < 10) mm = "0" + mm;
+      if (dd < 10) dd = "0" + dd;
+
+      reviewDateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    setTodayDate();
+
+    // Auto-fill city when restaurant changes
+    restaurantSelect.addEventListener("change", () => {
+      const selectedOption = restaurantSelect.options[restaurantSelect.selectedIndex];
+      cityInput.value = selectedOption.getAttribute("data-city") || "";
+      updateSuggestions();
+    });
+
+    // Update suggestions when rating changes
+    ratingSelect.addEventListener("change", updateSuggestions);
+
+    // Populate and show suggestions based on rating
+    function updateSuggestions() {
+      const rating = ratingSelect.value;
+      if (!rating) {
+        suggestionBox.style.display = "none";
+        suggestionList.innerHTML = "";
+        return;
+      }
+
+      suggestionList.innerHTML = ""; // clear old suggestions
+
+      suggestions[rating].forEach((reviewText) => {
+        const li = document.createElement("li");
+        li.textContent = reviewText;
+        li.title = "Click to fill this review";
+        li.addEventListener("click", () => {
+          reviewTextarea.value = reviewText;
+          reviewTextarea.focus();
+        });
+        suggestionList.appendChild(li);
+      });
+
+      suggestionBox.style.display = "block";
+    }
+  </script>
+</body>
+</html>

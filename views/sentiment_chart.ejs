@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentiment Distribution</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .dropdown-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+    }
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .chart-box {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sentiment Distribution by Restaurant</h1>
+
+  <div class="dropdown-container">
+    <h3>Select a Restaurant</h3>
+    <select id="restaurantSelect">
+      <option value="">-- Select Restaurant --</option>
+      <% sentimentData.forEach(item => { %>
+        <option value="<%= item.name %>"><%= item.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="chart-container">
+    <div class="chart-box">
+      <h3 id="selectedBarTitle">Sentiment Bar Chart</h3>
+      <canvas id="sentimentBarChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3 id="selectedPieTitle">Sentiment Pie Chart</h3>
+      <canvas id="sentimentPieChart"></canvas>
+    </div>
+  </div>
+  
+  <div style="text-align: center; margin-top: 20px;">
+    <a href="/" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">
+      ← Back to Home
+    </a>
+  </div>  
+
+  <script>
+    const sentimentData = <%- JSON.stringify(sentimentData) %>;
+
+    let sentimentBarChart;
+    let sentimentPieChart;
+
+    document.getElementById('restaurantSelect').addEventListener('change', function() {
+      const selected = this.value;
+      const selectedData = sentimentData.find(item => item.name === selected);
+      if (!selectedData) return;
+
+      const sentiments = ['Positive', 'Neutral', 'Negative'];
+      const counts = sentiments.map(s => selectedData.sentiments[s] || 0);
+
+      // Destroy old charts if they exist
+      if (sentimentBarChart) sentimentBarChart.destroy();
+      if (sentimentPieChart) sentimentPieChart.destroy();
+
+      // Bar chart
+      sentimentBarChart = new Chart(document.getElementById('sentimentBarChart'), {
+        type: 'bar',
+        data: {
+          labels: sentiments,
+          datasets: [{
+            label: `Sentiment Distribution - ${selected}`,
+            data: counts,
+            backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c']
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      // Pie chart
+      sentimentPieChart = new Chart(document.getElementById('sentimentPieChart'), {
+        type: 'pie',
+        data: {
+          labels: sentiments,
+          datasets: [{
+            label: `Sentiments - ${selected}`,
+            data: counts,
+            backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c']
+          }]
+        }
+      });
+
+      document.getElementById('selectedBarTitle').innerText = `Sentiment Bar Chart - ${selected}`;
+      document.getElementById('selectedPieTitle').innerText = `Sentiment Pie Chart - ${selected}`;
+    });
+  </script>
+
+</body>
+</html>
